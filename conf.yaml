@@ -1,0 +1,7 @@
+listenport: 8080
+baseurl:
+  - https://nodes.get-scatter.com
+  - https://eosnode.pizzadex.io
+  - https://eos.newdex.one
+  - http://eospush.tokenpocket.pro
+  - http://openapi.eos.ren
