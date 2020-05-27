@@ -1,5 +1,29 @@
 listenport: 8080
+heathcheck:
+  timeout: 2
+  interval: 4
 baseurl:
-  - https://jungle.eosusa.news
-  - https://jungle2.cryptolions.io
-  - http://jungle2.cryptolions.io
+  - https://eosnode.pizzadex.io
+  - https://nodes.get-scatter.com
+  - http://eospush.tokenpocket.pro
+  - http://openapi.eos.ren
+  - https://mainnet.eosio.sg
+  - https://api.eossweden.org
+  - https://eos.greymass.com
+  - https://mainnet.eos.dfuse.io
+  - https://mainnet.meet.one
+  - https://eos.newdex.one
+  - https://eos.eoscafeblock.com
+  - https://api.eos.education
+  - https://api.eosauthority.com
+  - https://api.eoscleaner.com
+  - https://api.zbeos.com
+  - https://api.eos.wiki
+  - https://api.blockpool.com
+  - https://api.bitmars.one
+  - https://api.eosrio.io
+  - https://api.eosargentina.io
+  - https://api.eostitan.com
+  - https://api.cypherglass.com
+  - https://api.acroeos.one
+  - https://mainnet.genereos.io
