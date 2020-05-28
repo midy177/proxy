@@ -40,6 +40,7 @@ func init() {
 func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 	// We will get to this...
     requrl := req.URL.RequestURI()
+    //healthcheck
 	if requrl == "/"{
 		res.WriteHeader(200)
 		res.Write([]byte("I'm health!"))
