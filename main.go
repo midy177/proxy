@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
 	"crypto/tls"
 	"fmt"
@@ -69,36 +68,44 @@ func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 			response, err := client.Do(reqest)
 			//copy response.header to res
 			if err == nil {
-				if needcheck {
-					if response.StatusCode == 200 || urlkey == len(confyaml.Baseurl)-1 {
+				respbody,err := ioutil.ReadAll(response.Body)
+				if err == nil {
+					if needcheck {
+						if (response.StatusCode >= 200 && response.StatusCode <= 300) || urlkey == len(confyaml.Baseurl)-1 {
+							for k, v := range response.Header {
+								res.Header()[k] = v
+							}
+							//copy body
+							res.WriteHeader(response.StatusCode)
+							res.Write(respbody)
+							//bufio.NewReader(response.Body).WriteTo(res)
+							reqest.Body.Close()
+							response.Body.Close()
+							break
+						}
+						reqest.Body.Close()
+						response.Body.Close()
+						log.Printf("请求失败,url:"+urlvalue+",请求方法:"+req.Method+"\n")
+					}else {
 						for k, v := range response.Header {
 							res.Header()[k] = v
 						}
 						//copy body
 						res.WriteHeader(response.StatusCode)
-						bufio.NewReader(response.Body).WriteTo(res)
+						res.Write(respbody)
+						//bufio.NewReader(response.Body).WriteTo(res)
 						reqest.Body.Close()
 						response.Body.Close()
 						break
 					}
-					reqest.Body.Close()
-					response.Body.Close()
-					log.Printf("请求失败,url:"+urlvalue+",请求方法:"+req.Method+"\n")
-				}else{
-					for k, v := range response.Header {
-						res.Header()[k] = v
-					}
-					//copy body
-					res.WriteHeader(response.StatusCode)
-					bufio.NewReader(response.Body).WriteTo(res)
-					reqest.Body.Close()
-					response.Body.Close()
-					break
+				}else {
+					log.Printf(err.Error())
 				}
 			}else if urlkey == len(confyaml.Baseurl)-1 {
 				res.WriteHeader(502)
 				res.Write([]byte("无可用节点\n"))
 				log.Printf("请求失败,url:"+urlvalue+",请求方法:"+req.Method+"\n")
+				log.Printf("当前所有节点请求失败！")
 			}
 		}
 	}
