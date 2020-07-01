@@ -40,13 +40,17 @@ func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 	// We will get to this...
     requrl := req.URL.RequestURI()
     //healthcheck
-	if requrl == "/"{
+	if requrl == "/healthcheck"{
 		res.WriteHeader(200)
 		res.Write([]byte("I'm health!"))
 		return
 	}
     reqmethod := req.Method
-	dd,_ := ioutil.ReadAll(req.Body)
+    var dd []byte
+    if req.Body != nil{
+    	defer req.Body.Close()
+		dd,_ = ioutil.ReadAll(req.Body)
+	}else {dd = nil}
 	needcheck := CheckResponse(requrl)
 	for urlkey,urlvalue := range Random(){
 		var url string
