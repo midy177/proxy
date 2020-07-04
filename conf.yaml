@@ -1,58 +1,19 @@
 listenport: 8080
 heathcheck:
-  timeout: 1
+  timeout: 3
 verifyuri:
-  - /v1/chain/get_info
-  - /v1/chain/get_table_rows
-  - /v1/chain/push_transaction
 baseurl:
-  - https://api.redpacketeos.com
-  - http://peer1.eoshuobipool.com:8181
-  - http://peer2.eoshuobipool.com:8181
-  - https://api.eosn.io
-  - https://api.eoseoul.io
-  - https://mainnet.meet.one
-  - https://api.bitmars.one
-  - https://eos.newdex.one
-  - https://api.eoslaomao.com
-  - http://api-mainnet.starteos.io
-  - http://eosapi.okpool.top
-  - https://api.eosrapid.com
-  - http://api.eosrapid.com:8888
-  - https://eosbp.atticlab.net
-  - http://eosbp.atticlab.net
-  - https://mainnet.eoscannon.io
-  - https://api.eos.wiki
-  - http://api.eos.wiki
-  - http://api.blockpool.com
-  - https://bp.whaleex.com
-  - https://node1.zbeos.com
-  - https://node2.zbeos.com
-  - https://api1.eosasia.one
-  - https://api.eosbeijing.one
-  - https://fn001.eossv.org
-  - https://mainnet.genereos.io
-  - https://api.bp.lambda.im
-  - http://api.bp.lambda.im:8181
-  - https://api.eossweden.org
-  - http://api.eossweden.org
-  - https://api.eosflare.io
-  - http://api.eosflare.io
-  - http://eos.eoscafeblock.com
-  - https://publicapi-mainnet.eosauthority.com
-  - http://publicapi-mainnet.eosauthority.com
-  - https://eos.greymass.com
-  - http://eos.greymass.com
-  - https://api.eosargentina.io
-  - http://api.eosargentina.io
-  - https://api.main.alohaeos.com
-  - http://api.main.alohaeos.com
-  - https://api.cypherglass.com
-  - http://api.cypherglass.com
-  - https://api.eosrio.io
-  - http://api.eosrio.io
-  - http://epeer1.nodeone.io:8870
-  - http://epeer3.nodeone.io:8880
-  - http://api.eos42.io:8882
-  - https://api.eostitan.com
-  - http://api.eostitan.com
+  - https://morecoin.zendesk.more.top
+MatchContentType:
+  - text/html
+  - application/x-javascript
+  - text/plain
+  - text/javascript
+  - application/javascript
+  - application/x-javascript
+  - application/xhtml+xml
+urlreplace:
+  morecoin.zendesk.com: morecoin.zendesk.more.top
+  support.morecoin.com: morecoin.zendesk.more.top
+  static.zdassets.com: morecoin.zendesk.more.top
+  p19.zdassets.com: morecoin.zendesk.more.top

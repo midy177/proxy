@@ -37,4 +37,17 @@ baseurl:      #后端服务器组列表，是一个数组
   - https://api.cypherglass.com
   - https://api.acroeos.one
   - https://mainnet.genereos.io
+MatchContentType: #需要替换文本内容的文件类型
+  - text/html
+  - application/x-javascript
+  - text/plain
+  - text/javascript
+  - application/javascript
+  - application/x-javascript
+  - application/xhtml+xml
+urlreplace: #替换的文本 替换前: 替换后
+  morecoin.zendesk.com: morecoin.zendesk.more.top
+  support.morecoin.com: morecoin.zendesk.more.top
+  static.zdassets.com: morecoin.zendesk.more.top
+  p19.zdassets.com: morecoin.zendesk.more.top
 ```

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"compress/gzip"
 	"crypto/tls"
 	"fmt"
 	"gopkg.in/yaml.v2"
@@ -10,6 +11,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -20,6 +22,8 @@ type conf struct {
 	Heathcheck heathcheckinfo   `yaml:"heathcheck"`
 	Baseurl    []string `yaml:"baseurl"`
 	Verifyuri    []string `yaml:"verifyuri"`
+	MatchContentType []string `yaml:"MatchContentType"`
+	UrlReplace     map[string]string `yaml:"urlreplace"`
 }
 type heathcheckinfo struct {
 	Timeout int `yaml:"timeout"`
@@ -80,6 +84,9 @@ func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 								res.Header()[k] = v
 							}
 							//copy body
+							if CheckContentType(response.Header.Get("content-type")) {
+								respbody = ToReplaceUrl(respbody,response.Header.Get("Content-Encoding"))
+							}
 							res.WriteHeader(response.StatusCode)
 							res.Write(respbody)
 							//bufio.NewReader(response.Body).WriteTo(res)
@@ -95,6 +102,9 @@ func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 							res.Header()[k] = v
 						}
 						//copy body
+						if CheckContentType(response.Header.Get("Content-Type")) {
+							respbody = ToReplaceUrl(respbody,response.Header.Get("Content-Encoding"))
+						}
 						res.WriteHeader(response.StatusCode)
 						res.Write(respbody)
 						//bufio.NewReader(response.Body).WriteTo(res)
@@ -137,6 +147,51 @@ func Random()[]string {
 	}
 
 	return tmparray
+}
+func ToReplaceUrl(before []byte,isgzip string)[]byte  {
+	//log.Printf(string(before))
+	//var reader bytes.Reader
+	reader := bytes.NewReader(before)
+	if strings.Contains(isgzip,"gzip") {
+		r,err := gzip.NewReader(reader)
+		defer r.Close()
+		if err != nil {
+			log.Printf(err.Error())
+			return before
+		}
+		undatas, err := ioutil.ReadAll(r)
+		if err != nil {
+			log.Printf(err.Error())
+			return before
+		}
+		for k,v := range confyaml.UrlReplace {
+			undatas = bytes.Replace(undatas,[]byte(k),[]byte(v),-1)
+		}
+		var buf bytes.Buffer
+		g := gzip.NewWriter(&buf)
+		g.Write(undatas)
+        g.Close()
+		if err != nil {
+			log.Printf(err.Error())
+			return before
+		}
+		return buf.Bytes()
+	}else{
+		var rpdatas []byte
+		for k,v := range confyaml.UrlReplace {
+			rpdatas = bytes.Replace(before,[]byte(k),[]byte(v),-1)
+		}
+		//log.Printf(string(before))
+		return rpdatas
+	}
+}
+func CheckContentType(ContentType string)bool{
+ for _,v := range confyaml.MatchContentType {
+	 if strings.Contains(ContentType,v){
+		 return true
+	 }
+ }
+    return false
 }
 
 func main() {
