@@ -7,14 +7,21 @@
 ##配置文件，yaml格式, conf.yaml
 
 ```
-listenport: 8080   #监听端口
-heathcheck:
-  timeout: 1    #代理请求超时时间
-verifyuri:     #需要校验请求状态码直到为200的url，是一个数组
-  - /v1/chain/get_info
-  - /v1/chain/get_table_rows
-  - /v1/chain/push_transaction
-baseurl:      #后端服务器组列表，是一个数组
+listenport: 80
+mode: static   #static 静态配置，指定后端host, dynamic  动态host，动态请求需要访问的URL default: static
+heathcheck:   #健康检查配置
+  enable: true #健康检查开关
+  interval: 60  #健康检查间隔
+  checkurl: /healthcheck  #健康检查路径
+  timeout: 10 #http请求超时时间
+verifyuri: #校验代理请求对应,状态码是否为200，单不是200时遍历所有健康节点
+  enable: true  #开关
+  uri:
+    - /v1/chain/get_info
+    - /v1/chain/get_table_rows
+    - /v1/chain/push_transaction
+baseurl:  #代理url
+  #- https://morecoin.zendesk.more.top
   - https://eosnode.pizzadex.io
   - https://nodes.get-scatter.com
   - http://eospush.tokenpocket.pro
@@ -37,17 +44,16 @@ baseurl:      #后端服务器组列表，是一个数组
   - https://api.cypherglass.com
   - https://api.acroeos.one
   - https://mainnet.genereos.io
-MatchContentType: #需要替换文本内容的文件类型
-  - text/html
-  - application/x-javascript
-  - text/plain
-  - text/javascript
-  - application/javascript
-  - application/x-javascript
-  - application/xhtml+xml
-urlreplace: #替换的文本 替换前: 替换后
-  morecoin.zendesk.com: morecoin.zendesk.more.top
-  support.morecoin.com: morecoin.zendesk.more.top
-  static.zdassets.com: morecoin.zendesk.more.top
-  p19.zdassets.com: morecoin.zendesk.more.top
+MatchContentType: #需要替换的ContentType类型
+  enable: false   #开关
+  ContentType:
+    - text/html
+    - application/x-javascript
+    - text/plain
+    - text/javascript
+    - application/javascript
+    - application/x-javascript
+    - application/xhtml+xml
+  replace: #替换字符 格式说明  old: new
+    morecoin.zendesk.com: morecoin.zendesk.more.top
 ```
