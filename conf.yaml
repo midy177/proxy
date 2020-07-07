@@ -3,7 +3,7 @@ mode: static   #static 静态配置，指定后端host, dynamic  动态host，�
 heathcheck:   #健康检查配置
   enable: true #健康检查开关
   interval: 60  #健康检查间隔
-  checkurl: /healthcheck  #健康检查路径
+  checkurl: /v1/chain/get_info  #健康检查路径
   timeout: 10 #http请求超时时间
 verifyuri: #校验代理请求对应,状态码是否为200，单不是200时遍历所有健康节点
   enable: true  #开关
@@ -12,7 +12,6 @@ verifyuri: #校验代理请求对应,状态码是否为200，单不是200时遍�
     - /v1/chain/get_table_rows
     - /v1/chain/push_transaction
 baseurl:  #代理url
-  #- https://morecoin.zendesk.more.top
   - https://eosnode.pizzadex.io
   - https://nodes.get-scatter.com
   - http://eospush.tokenpocket.pro
