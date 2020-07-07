@@ -4,7 +4,7 @@ heathcheck:   #健康检查配置
   enable: true #健康检查开关
   interval: 60  #健康检查间隔
   checkurl: /v1/chain/get_info  #健康检查路径
-  timeout: 10 #http请求超时时间
+  timeout: 5 #http请求超时时间
 verifyuri: #校验代理请求对应,状态码是否为200，单不是200时遍历所有健康节点
   enable: true  #开关
   uri:
