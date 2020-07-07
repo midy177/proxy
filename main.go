@@ -119,7 +119,7 @@ func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 						}
 						reqest.Body.Close()
 						response.Body.Close()
-						log.Printf("请求失败,url:"+urlvalue+",请求方法:"+req.Method+"\n")
+						log.Printf("请求失败,url:"+url+",请求方法:"+req.Method+"\n")
 					}else {
 						for k, v := range response.Header {
 							res.Header()[k] = v
@@ -141,7 +141,7 @@ func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 			}else if urlkey == len(proxybaseurl)-1 {
 				res.WriteHeader(502)
 				res.Write([]byte("无可用节点\n"))
-				log.Printf("请求失败,url:"+urlvalue+",请求方法:"+req.Method+"\n")
+				log.Printf("请求失败,url:"+url+",请求方法:"+req.Method+"\n")
 				log.Printf("当前所有节点请求失败！")
 			}
 		}

@@ -57,3 +57,20 @@ MatchContentType: #需要替换的ContentType类型
   replace: #替换字符 格式说明  old: new
     morecoin.zendesk.com: morecoin.zendesk.more.top
 ```
+###dokcer 运行
+```
+docker run -it -d 1228022817/proxy:latest
+```
+###docker-compose
+```
+version: '3'
+services:
+  proxy:
+    image: 1228022817/proxy:latest
+    container_name: proxy
+    ports:
+      - "8080:80"
+    restart: always
+    volumes:
+      - /home/localhost/conf.yaml:/conf.yaml
+```
